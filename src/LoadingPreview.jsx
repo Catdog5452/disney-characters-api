@@ -7,9 +7,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Skeleton from "@mui/material/Skeleton";
 
+/**
+ * Component representing a loading skeleton for character preview.
+ * @returns {JSX.Element} The JSX representation of the loading skeleton.
+ */
 export default function LoadingPreview() {
   return (
-    <Card style={{ minWidth: 345, mb: 2 }}>
+    <Card sx={{ minWidth: 345, mb: 2 }}>
       <CardHeader
         avatar={
           <Avatar aria-label="character-avatar">

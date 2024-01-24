@@ -6,7 +6,20 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import PropTypes from "prop-types";
+import SearchIcon from "@mui/icons-material/Search";
 
+/**
+ * Component representing a filter and pagination control.
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.filterType - The selected filter type.
+ * @param {function} props.setFilterType - Callback to set the filter type.
+ * @param {string} props.filterQuery - The filter query.
+ * @param {function} props.setFilterQuery - Callback to set the filter query.
+ * @param {number} props.page - The current page number.
+ * @param {number} props.totalPages - The total number of pages.
+ * @param {function} props.setPage - Callback to set the current page.
+ * @returns {JSX.Element} The JSX representation of the filter component.
+ */
 export default function FilterComponent({
   filterType,
   setFilterType,
@@ -18,16 +31,16 @@ export default function FilterComponent({
 }) {
   return (
     <>
+      {/* Filter and search input */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          mb: 2,
         }}
       >
-        <Typography variant="h6" id="select-filter-type-label">
-          Filter By
-        </Typography>
+        <SearchIcon fontSize="large" />
         <Select
           labelId="select-filter-type-label"
           id="select-filter-type"
@@ -53,6 +66,8 @@ export default function FilterComponent({
           }}
         />
       </Box>
+
+      {/* Pagination controls */}
       <Box
         justifyContent={"center"}
         alignItems={"center"}
@@ -63,7 +78,9 @@ export default function FilterComponent({
         }}
       >
         <Stack spacing={2} direction="row">
-          <Typography variant="subtitle1">Page: {page}</Typography>
+          <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+            Page: {page}
+          </Typography>
           <Pagination
             count={totalPages}
             page={page}
@@ -76,6 +93,7 @@ export default function FilterComponent({
   );
 }
 
+// Prop type validation
 FilterComponent.propTypes = {
   filterType: PropTypes.string.isRequired,
   setFilterType: PropTypes.func.isRequired,

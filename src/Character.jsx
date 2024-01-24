@@ -7,38 +7,53 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import ListItemButton from "@mui/material/ListItemButton";
 import { useState } from "react";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
+import CharacterDropdown from "./CharacterDropdown";
 
+/**
+ * Functional component representing the display of a character.
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object} props.character - The character object to be displayed.
+ * @returns {JSX.Element} The JSX representation of the component.
+ */
 export default function Character({ character }) {
+  // State to manage the dropdown visibility
   const [openFilms, setOpenFilms] = useState(false);
   const [openTVShows, setOpenTVShows] = useState(false);
   const [openShortFilms, setOpenShortFilms] = useState(false);
   const [openVideoGames, setOpenVideoGames] = useState(false);
 
+  /**
+   * Toggle the visibility of the Films dropdown.
+   */
   const handleFilmsClick = () => {
     setOpenFilms(!openFilms);
   };
 
+  /**
+   * Toggle the visibility of the TV Shows dropdown.
+   */
   const handleTVShowsClick = () => {
     setOpenTVShows(!openTVShows);
   };
 
+  /**
+   * Toggle the visibility of the Short Films dropdown.
+   */
   const handleShortFilmsClick = () => {
     setOpenShortFilms(!openShortFilms);
   };
 
+  /**
+   * Toggle the visibility of the Video Games dropdown.
+   */
   const handleVideoGamesClick = () => {
     setOpenVideoGames(!openVideoGames);
   };
 
+  // JSX representation of the component
   return (
-    <Card style={{ minWidth: 345, marginBottom: 16 }}>
+    <Card key={character.id} style={{ minWidth: 345, marginBottom: 16 }}>
       <CardHeader
         avatar={
           <Avatar aria-label="character-avatar">
@@ -57,82 +72,42 @@ export default function Character({ character }) {
         <List component="nav" aria-labelledby="media-list" style={{ mt: 1 }}>
           {/* Display sub list of films */}
           {character.films.length > 0 && (
-            <>
-              <ListItemButton onClick={handleFilmsClick}>
-                <ListItemText primary="Films" />
-                {openFilms ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={openFilms} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  {character.films.length > 0 &&
-                    character.films.map((film, index) => (
-                      <ListItem sx={{ ml: 2 }} key={index}>
-                        <ListItemText primary={film} />
-                      </ListItem>
-                    ))}
-                </List>
-              </Collapse>
-            </>
+            <CharacterDropdown
+              open={openFilms}
+              handleClick={handleFilmsClick}
+              text={"Films"}
+              list={character.films}
+            />
           )}
 
           {/* Display sub list of TV shows */}
           {character.tvShows.length > 0 && (
-            <>
-              <ListItemButton onClick={handleTVShowsClick}>
-                <ListItemText primary="TV Shows" />
-                {openTVShows ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={openTVShows} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  {character.tvShows.length > 0 &&
-                    character.tvShows.map((tvShow, index) => (
-                      <ListItem sx={{ ml: 2 }} key={index}>
-                        <ListItemText primary={tvShow} />
-                      </ListItem>
-                    ))}
-                </List>
-              </Collapse>
-            </>
+            <CharacterDropdown
+              open={openTVShows}
+              handleClick={handleTVShowsClick}
+              text={"TV Shows"}
+              list={character.tvShows}
+            />
           )}
 
           {/* Display sub list of Short Films */}
           {character.shortFilms.length > 0 && (
-            <>
-              <ListItemButton onClick={handleShortFilmsClick}>
-                <ListItemText primary="Short Films" />
-                {openShortFilms ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={openShortFilms} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  {character.shortFilms.length > 0 &&
-                    character.shortFilms.map((shortFilm, index) => (
-                      <ListItem sx={{ ml: 2 }} key={index}>
-                        <ListItemText primary={shortFilm} />
-                      </ListItem>
-                    ))}
-                </List>
-              </Collapse>
-            </>
+            <CharacterDropdown
+              open={openShortFilms}
+              handleClick={handleShortFilmsClick}
+              text={"Short Films"}
+              list={character.shortFilms}
+            />
           )}
 
           {/* Display sub list of Video Games */}
           {character.videoGames.length > 0 && (
-            <>
-              <ListItemButton onClick={handleVideoGamesClick}>
-                <ListItemText primary="Video Games" />
-                {openVideoGames ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={openVideoGames} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  {character.videoGames.length > 0 &&
-                    character.videoGames.map((videoGame, index) => (
-                      <ListItem sx={{ ml: 2 }} key={index}>
-                        <ListItemText primary={videoGame} />
-                      </ListItem>
-                    ))}
-                </List>
-              </Collapse>
-            </>
+            <CharacterDropdown
+              open={openVideoGames}
+              handleClick={handleVideoGamesClick}
+              text={"Video Games"}
+              list={character.videoGames}
+            />
           )}
         </List>
       </CardContent>
@@ -151,6 +126,7 @@ export default function Character({ character }) {
   );
 }
 
+// Prop type validation
 Character.propTypes = {
   character: PropTypes.object.isRequired,
 };
